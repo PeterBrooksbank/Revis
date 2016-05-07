@@ -1,0 +1,71 @@
+﻿<h1>REVIS</h1>
+<h2>Visual diffing for sites and images</h2>
+<h3>Based on <a href="https://css-tricks.com/visual-regression-testing-css-blend-modes/">Visual Regression Testing with CSS Blend Modes</a></h3>
+
+<form class="form-inline">
+    <div class="form-group">
+        <label class="sr-only" for="urla">Url A</label>
+        <input type="url" class="form-control" id="urla" placeholder="Url A">
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="urlb">Url B</label>
+        <input type="url" class="form-control" id="urlb" placeholder="Url B">
+    </div>    
+</form>
+<form class="form-inline">
+    <div class="form-group">
+        <label class="sr-only" for="iHeight">Height</label>
+        <input type="number" class="form-control" id="iHeight" placeholder="Height" value="">
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="iWidth">Width</label>
+        <input type="number" class="form-control" id="iWidth" placeholder="Width" value="">
+    </div>
+</form>
+<hr />
+<br />
+<div class="frameArea">
+    <iframe id="ifA"></iframe>
+    <iframe id="ifB"></iframe>
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var urlA = document.querySelector('#urla');
+        var urlB = document.querySelector('#urlb');
+        var frameA = document.querySelectorAll('#ifA');
+        var frameB = document.querySelectorAll('#ifB');
+
+        var frameHeight = document.querySelector('#iHeight');
+        var frameWidth = document.querySelector('#iWidth');
+
+        var allFrames = document.querySelectorAll('iframe');
+
+        urlA.addEventListener('input', function () {
+            [].forEach.call(frameA, function (frame) {
+                frame.src = urlA.value;
+            });
+        }, false);
+
+        urlB.addEventListener('input', function () {
+            [].forEach.call(frameB, function (frame) {
+                frame.src = urlB.value;
+            });
+        }, false);
+
+        frameHeight.addEventListener('input', function () {
+            for(var i = 0; i < allFrames.length; ++i) {
+                allFrames[i].style.height = frameHeight.value + 'px';
+            };
+
+            var frameArea = document.querySelector('.frameArea');
+            frameArea.style.height = frameHeight.value + 'px';
+        }, false);
+
+        frameWidth.addEventListener('input', function () {
+            for(var i = 0; i < allFrames.length; ++i) {
+                allFrames[i].style.width = frameWidth.value + 'px';
+            };
+        }, false);
+    };
+</script>
