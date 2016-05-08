@@ -74,17 +74,22 @@
                 resize:both;
             }
 
+            .frameArea div{
+                width: 100%;
+                margin: auto;
+                position: absolute;
+            }
+
             iframe{
                 top:0;
                 left: 0;
-                border: none;
-                position:absolute;
+                border: none;               
                 width: 100%;
                 height: 100%;
-                pointer-events: none;
+                pointer-events: none;                
             }
 
-            iframe:nth-child(2){
+            #ifB{
                 mix-blend-mode: difference;
             }
         </style>

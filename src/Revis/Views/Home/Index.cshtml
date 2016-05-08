@@ -2,31 +2,51 @@
 <h2>Visual diffing for sites</h2>
 <h3>Based on <a href="https://css-tricks.com/visual-regression-testing-css-blend-modes/">Visual Regression Testing with CSS Blend Modes</a></h3>
 
-<form class="form-inline">
-    <div class="form-group">
-        <label class="sr-only" for="urla">Url A</label>
-        <input type="url" class="form-control" id="urla" placeholder="Url A">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="urlb">Url B</label>
-        <input type="url" class="form-control" id="urlb" placeholder="Url B">
-    </div>    
-</form>
-<form class="form-inline">
-    <div class="form-group">
-        <label class="sr-only" for="iHeight">Height</label>
-        <input type="number" class="form-control" id="iHeight" placeholder="Height" value="">
-    </div>
-    <div class="form-group">
-        <label class="sr-only" for="iWidth">Width</label>
-        <input type="number" class="form-control" id="iWidth" placeholder="Width" value="">
-    </div>
-</form>
+<div class="col-md-12">
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="urla">Url A</label>
+            <input type="url" class="form-control" id="urla" placeholder="Url A">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="urlb">Url B</label>
+            <input type="url" class="form-control" id="urlb" placeholder="Url B">
+        </div>
+    </form>
+</div>
+<div class="col-md-6">
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="iHeightA">Frame A Height</label>
+            <input type="number" class="form-control" id="iHeightA" placeholder="Frame A Height" value="">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="iWidthA">Frame A Width</label>
+            <input type="number" class="form-control" id="iWidthA" placeholder="Frame A Width" value="">
+        </div>
+    </form>
+</div>
+<div class="col-md-6">
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="iHeightB">Frame B Height</label>
+            <input type="number" class="form-control" id="iHeightB" placeholder="Frame B Height" value="">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="iWidthB">Frame B Width</label>
+            <input type="number" class="form-control" id="iWidthB" placeholder="Frame B Width" value="">
+        </div>
+    </form>
+</div>
 <hr />
 <br />
-<div class="frameArea">
-    <iframe id="ifA"></iframe>
-    <iframe id="ifB"></iframe>
+<div class="col-md-12 frameArea" style="margin-top: 50px;">
+    <div>
+        <iframe id="ifA"></iframe>
+    </div>
+    <div>
+        <iframe id="ifB"></iframe>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -36,8 +56,10 @@
         var frameA = document.querySelectorAll('#ifA');
         var frameB = document.querySelectorAll('#ifB');
 
-        var frameHeight = document.querySelector('#iHeight');
-        var frameWidth = document.querySelector('#iWidth');
+        var frameHeightA = document.querySelector('#iHeightA');
+        var frameWidthA = document.querySelector('#iWidthA');
+        var frameHeightB = document.querySelector('#iHeightB');
+        var frameWidthB = document.querySelector('#iWidthB');
 
         var allFrames = document.querySelectorAll('iframe');
 
@@ -53,19 +75,36 @@
             });
         }, false);
 
-        frameHeight.addEventListener('input', function () {
-            for(var i = 0; i < allFrames.length; ++i) {
-                allFrames[i].style.height = frameHeight.value + 'px';
-            };
+
+        frameHeightA.addEventListener('input', function () {
+            [].forEach.call(frameA, function (frame) {
+                frame.style.height = frameHeightA.value + 'px';
+            });
 
             var frameArea = document.querySelector('.frameArea');
-            frameArea.style.height = frameHeight.value + 'px';
+            frameArea.style.height = (frameHeightA.value > frameHeightB.value ? frameHeightA.value : frameHeightB.value) + 'px';
         }, false);
 
-        frameWidth.addEventListener('input', function () {
-            for(var i = 0; i < allFrames.length; ++i) {
-                allFrames[i].style.width = frameWidth.value + 'px';
-            };
+        frameHeightB.addEventListener('input', function () {
+            [].forEach.call(frameB, function (frame) {
+                frame.style.height = frameHeightB.value + 'px';
+            });
+
+            var frameArea = document.querySelector('.frameArea');
+            frameArea.style.height = (frameHeightA.value > frameHeightB.value ? frameHeightA.value : frameHeightB.value) + 'px';
+        }, false);
+
+
+        frameWidthA.addEventListener('input', function () {
+            [].forEach.call(frameA, function (frame) {
+                frame.style.width = frameWidthA.value + 'px';
+            });
+        }, false);
+
+        frameWidthB.addEventListener('input', function () {
+            [].forEach.call(frameB, function (frame) {
+                frame.style.width = frameWidthB.value + 'px';
+            });
         }, false);
     };
 </script>
